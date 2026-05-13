@@ -10,6 +10,7 @@ app.include_router(webhook_router, prefix="/webhook")
 @app.on_event("startup")
 async def startup():
     async with engine.begin() as conn:
+        await conn.execute(text("CREATE EXTENSION IF NOT EXISTS vector"))
         await conn.run_sync(Base.metadata.create_all)
 
 @app.get("/")
