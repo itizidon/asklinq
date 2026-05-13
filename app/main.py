@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from app.api.webhooks import router as webhook_router
 from app.core.database import Base, engine
+from sqlalchemy import text
 
 
 app = FastAPI(title="asklinq", version="1.0.0")
