@@ -32,9 +32,6 @@ async def add_reaction(message_id: str, reaction: str = "like"):
             json=payload
         )
 
-    print("👍 REACTION STATUS:", response.status_code)
-    print("👍 REACTION BODY:", response.text)
-
 async def send_message(to_number: str, text: str):
 
     url = "https://api.linqapp.com/api/partner/v3/chats"
