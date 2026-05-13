@@ -1,5 +1,3 @@
----
-
 # 📱 AskLinq — Text Your Documents and Get Answers
 
 ## What it does
