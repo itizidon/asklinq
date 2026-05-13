@@ -14,6 +14,27 @@ LINQ_API_KEY = settings.LINQ_API_KEY
 LINQ_BASE_URL = "https://api.linqapp.com"
 FROM_NUMBER = settings.LINQ_FROM_NUMBER
 
+async def add_reaction(message_id: str, reaction: str = "like"):
+    url = f"{LINQ_BASE_URL}/api/partner/v3/messages/{message_id}/reactions"
+
+    payload = {
+        "type": reaction,
+        "operation": "add"
+    }
+
+    async with httpx.AsyncClient() as client:
+        response = await client.post(
+            url,
+            headers={
+                "Authorization": f"Bearer {LINQ_API_KEY}",
+                "Content-Type": "application/json"
+            },
+            json=payload
+        )
+
+    print("👍 REACTION STATUS:", response.status_code)
+    print("👍 REACTION BODY:", response.text)
+
 async def send_message(to_number: str, text: str):
 
     url = "https://api.linqapp.com/api/partner/v3/chats"
@@ -57,7 +78,7 @@ async def linq_webhook(
 ):
 
     data = await request.json()
-
+    message_id = data.get("data", {}).get("id")
     phone = (
         data.get("from")
         or data.get("data", {}).get("sender_handle", {}).get("handle")
@@ -99,8 +120,10 @@ async def linq_webhook(
                 raw_text=content,
                 source="file"
             )
-
-            await send_message(phone, "File uploaded and processed successfully.")
+            if message_id:
+                await add_reaction(message_id, "like")
+            else:
+                await send_message(phone, "File uploaded and processed successfully.")
 
             return {"status": "processed"}
 
