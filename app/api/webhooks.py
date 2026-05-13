@@ -53,8 +53,6 @@ async def send_message(to_number: str, text: str):
             json=payload
         )
 
-    print("📤 SEND STATUS:", response.status_code)
-    print("📤 SEND BODY:", response.text)
 
 async def load_pdf_from_url(url: str):
     async with httpx.AsyncClient() as client:
