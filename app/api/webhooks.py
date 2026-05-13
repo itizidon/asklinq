@@ -33,19 +33,13 @@ async def add_reaction(message_id: str, reaction: str = "like"):
         )
 
 async def send_message(to_number: str, text: str):
-
     url = "https://api.linqapp.com/api/partner/v3/chats"
 
     payload = {
         "from": FROM_NUMBER,
         "to": [to_number],
         "message": {
-            "parts": [
-                {
-                    "type": "text",
-                    "value": text
-                }
-            ]
+            "parts": [{"type": "text", "value": text}]
         }
     }
 
@@ -58,6 +52,9 @@ async def send_message(to_number: str, text: str):
             },
             json=payload
         )
+
+    print("📤 SEND STATUS:", response.status_code)
+    print("📤 SEND BODY:", response.text)
 
 async def load_pdf_from_url(url: str):
     async with httpx.AsyncClient() as client:
