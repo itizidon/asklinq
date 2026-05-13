@@ -14,3 +14,8 @@ class Settings(BaseSettings):
         extra = "ignore"
 
 settings = Settings()
+
+settings.DATABASE_URL = settings.DATABASE_URL.replace(
+    "postgresql://",
+    "postgresql+asyncpg://"
+)
