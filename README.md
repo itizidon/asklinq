@@ -1,3 +1,4 @@
+This was a technical assignment
 # 📱 AskLinq — Text Your Documents and Get Answers
 
 ## What it does
